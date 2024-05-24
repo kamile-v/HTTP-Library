@@ -31,6 +31,9 @@
     #uNameArea {
       display: flex;
     }
+    #uModifyArea {
+      display: flex;
+    }
   </style>
 </head>
 <body>
@@ -43,7 +46,7 @@
           <label for="route">Route:</label>
           <input type="url" name="url" id="route" 
                   size="40"
-                  value="https://jsonplaceholder.typicode.com/users/"
+                  value="https://jsonplaceholder.typicode.com/posts"
                   pattern="https://.*"
                   readonly>
         </div>
@@ -55,6 +58,17 @@
           <label for="uname">User Name:</label>
           <input type="text" name="uname" size="30">
         </div>
+        <div id = "uDropdown">
+          <select name="dropdown" id="dropdown">
+            <option value="userid">userId</option>
+            <option value="title">title</option>
+            <option value="body">body</option>
+          </select>
+        </div>
+        <div id = "uModifyArea">
+          <label for="modify">Change to:</label>
+          <input type="text" name="modify" size="30">
+        </div>
       </section>
       <fieldset>
         <legend>Method:</legend>
@@ -62,6 +76,7 @@
         <input type="radio" id="rbPost" name="HTTPtype"  value="post">&nbspPOST</label>
         <input type="radio" id="rbPut" name="HTTPtype" value="put">&nbspPUT 
         <input type="radio" id="rbDelete" name="HTTPtype" value="delete">&nbspDELETE 
+        <input type="radio" id="rbPatch" name="HTTPtype" value="patch">&nbspPATCH
         <div>
           <input type="submit" value="SEND" class="primary-button" id="SendReq">
         </div>
