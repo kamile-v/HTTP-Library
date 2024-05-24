@@ -284,29 +284,20 @@ function SetupRequest() {
   if (reqType === "patch") {
     okToSend = false;
     if (ValidId(document.querySelector("#uIdArea>input").value,true)) {
-      let uCategory = document.querySelector("#dropdown").value;
-      let uModified = document.querySelector("#uModifyArea>input").value;
 
-      if (uCateogry === "name") {
-        let uName = uModified.split(" ")[0].trim();
-        data = {
-          name:`${uName}`};
+      if (ValidId(document.querySelector("#uIdArea>input").value,true)) {
+        let uFullName = document.querySelector("#uNameArea>input").value;
+        if (ValidName(uFullName)) {
+          let uName = uFullName.split(" ")[0].trim();
+          let uMail = uName.concat("@spu.edu");
+          data = {
+            name:`${uFullName}`};
           okToSend = true;
-      }
-      else if (uCategory === "phone") {
-        let uPhone = uModified.split(" ")[0].trim();
-        data = {
-          phone:`${uPhone}`};
-          okToSend = true;
-      }
-      else if (uCategory === "website") {
-        let uWebsite = uModified.split(" ")[0].trim();
-        data = {
-          uWebsite:`${uWebsite}`};
-          okToSend = true;
-      };
+        };
+
+
     }
-  }
+  }}
   
 
   // The setup to change the HTML when there is an input error. 
@@ -334,32 +325,27 @@ function SetupInput(reqType) {
     case "get":
       document.querySelector("#uIdArea").style.display = "flex";
       document.querySelector("#uNameArea").style.display = "none";
-      document.querySelector("#uDropdown").style.visibility = "hidden";
-      document.querySelector("#uModifyArea").style.visibility = "hidden";
+
       break;
     case "post":
       document.querySelector("#uIdArea").style.display = "none";
       document.querySelector("#uNameArea").style.display = "flex";
-      document.querySelector("#uDropdown").style.visibility = "hidden";
-      document.querySelector("#uModifyArea").style.visibility = "hidden";
+
       break;
     case "put":
       document.querySelector("#uIdArea").style.display = "flex";
       document.querySelector("#uNameArea").style.display = "flex";
-      document.querySelector("#uDropdown").style.visibility = "hidden";
-      document.querySelector("#uModifyArea").style.visibility = "hidden";
+
       break;
     case "delete":
       document.querySelector("#uIdArea").style.display = "flex";
       document.querySelector("#uNameArea").style.display = "none";
-      document.querySelector("#uDropdown").style.visibility = "hidden";
-      document.querySelector("#uModifyArea").style.visibility = "hidden";
+
       break;
     case "patch":
       document.querySelector("#uIdArea").style.display = "flex";
-      document.querySelector("#uNameArea").style.display = "none";
-      document.querySelector("#uDropdown").style.visibility = "visible";
-      document.querySelector("#uModifyArea").style.visibility = "visible";
+      document.querySelector("#uNameArea").style.display = "flex";
+
       break;
   }
 }
