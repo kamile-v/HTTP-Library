@@ -1,75 +1,116 @@
-  /** GOALS OF THIS FILE:
-   * Change callbacks to async and await
-   * change xhr to fetch function
-   * change object/object literals and prototypes to classes and methods
-   *  **/
+/**
+ * Members: Tracy Mai, Minnie Cao, Kamile Vaicekonis
+ * Assignment: HTTP Library 
+ * File: coreHTTP.js
+ * Course: CSC 3221 - Netcentric Computing - Dr. Dennis Vickers 
+ * 
+ */
 
-// Constructor to create an XHR object
-function coreHTTP() {
-  this.http = new XMLHttpRequest();
-}
+class coreHTTP {
 
-/* <<< HTTP GET request >>> */
-coreHTTP.prototype.get = function(url, callback) {
-  // Open the connection
-  this.http.open("GET", url);
+   /**
+   * Get
+   * @param {*} url The url that we want to acesss.
+   * @returns Either the text if the page access was sucessful,
+   *          or an error message if it was not. 
+   */
 
-  // Process the request when it is returned.
-  this.http.onload = () => {
-    if (this.http.status >= 200 && this.http.status <= 299) {
-      callback(null, this.http.responseText);
+  async get(url) {
+    const response = await fetch(url);
+    
+    if (response.ok) {
+      return await response.text();
     } else {
-      callback(`GET Error: ${this.http.status}`);
+      console.log("GET Error: " + response.status);
+      return ("GET Error: " + response.status);
     }
   }
 
-  // Send the request
-  this.http.send();
-}
-
-/* <<< HTTP POST request >>> */
-coreHTTP.prototype.post = function(url, data, callback) {
-  this.http.open("POST", url);
-  this.http.setRequestHeader("content-type","application/json");
-
-  this.http.onload = () => {
-    if (this.http.status >= 200 && this.http.status <= 299) {
-      callback(null, this.http.responseText);
+   /**
+   * Post
+   * @param {*} url The url we want to access.
+   * @param {*} data The data we want to post. 
+   * @returns The newly added data if the page was accessed sucessfully.
+   *          Or an error message if it was not.
+   */
+ 
+  async post(url, data) {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {"content-type": "application/json"},
+      body: JSON.stringify(data)
+    });
+ 
+    if (response.ok) {
+      return await response.text();
     } else {
-      callback(`POST Error: ${this.http.status}`);
+     console.log("POST Error: " + response.status);
+     return ("POST Error: " + response.status);
+    }
+  } 
+
+   /**
+   * Put
+   * @param {*} url The url we want to access.
+   * @param {*} data The data we want to change.
+   * @returns The data changed if it was successful, and an error
+   *          message otherwise.
+   */
+
+  async put(url, data) {
+    
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {"content-type": "application/json"},
+      body: JSON.stringify(data)
+    });
+ 
+    if (response.ok) {
+      return await response.text();
+    } else {
+      console.log("PUT Error: " + response.status);
     }
   }
-
-  this.http.send(JSON.stringify(data));
-}
-
-/* <<< HTTP PUT request >>> */
-coreHTTP.prototype.put = function(url, data, callback) {
-  this.http.open("PUT", url);
-  this.http.setRequestHeader("content-type","application/json");
-
-  this.http.onload = () => {
-    if (this.http.status >= 200 && this.http.status <= 299) {
-      callback(null, this.http.responseText);
-    } else {
-      callback(`PUT Error: ${this.http.status}`);
-    }
-  }
-
-  this.http.send(JSON.stringify(data));
-}
-
-/* <<< HTTP DELETE request >>> */
-coreHTTP.prototype.delete = function(url, callback) {
-  this.http.open("DELETE", url);
   
-  this.http.onload = () => {
-    if (this.http.status >= 200 && this.http.status <= 299) {
-      callback(null, "User Deleted");
+  /**
+   * Delete
+   * @param {*} url The url we want to access
+   * @returns "User Deleted" if the url was able to be accessed, so
+   *           the user was deleted. Or an error message otherwise.
+   */
+
+  async delete(url) {
+ 
+    const response = await fetch(url, {
+      method: "DELETE"
+    });
+    
+    if (response.ok) {
+      return "User Deleted";
     } else {
-      callback(`DELETE Error: ${this.http.status}`);
+      console.log("Delete Error: " + response.status);
     }
   }
 
-  this.http.send();  
+  /**
+   * Patch
+   * @param {*} url The url we want to access
+   * @param {*} data The data we want to change.
+   * @returns The data changed if it was successful, and an error
+   *          message otherwise.
+   */
+  async patch(url, data) {
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {"content-type": "application/json"},
+      body: JSON.stringify(data)
+    });
+ 
+    if (response.ok) {
+      return await response.text();
+    } else {
+     console.log("PATCH Error: " + response.status);
+     return ("PATCH Error: " + response.status);
+    }
+  } 
 }
